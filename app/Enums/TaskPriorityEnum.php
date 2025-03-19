@@ -4,8 +4,23 @@ namespace App\Enums;
 
 enum TaskPriorityEnum: string
 {
-    case LOW = 'low';
-    case MEDIUM = 'medium';
-    case HIGH = 'high';
-    case URGENT = 'urgent';
+    case Low = 'low';
+    case Medium = 'medium';
+    case High = 'high';
+    case Urgent = 'urgent';
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::Low     => __('Low'),
+            self::Medium    => __('Medium'),
+            self::High => __('High'),
+            self::Urgent => __('Urgent'),
+        };
+    }
+
+    public static function toArray(): array
+    {
+      return array_column(TaskPriorityEnum::cases(), 'value');
+    } 
 }

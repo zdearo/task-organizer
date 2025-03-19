@@ -12,12 +12,11 @@ return new class extends Migration {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->enum('status', TaskStatusEnum::class);
-            $table->string('status');
-            $table->string('priority');
-            $table->dateTime('due_date');
-            $table->dateTime('completed_at');
+            $table->text('description')->nullable();
+            $table->enum('status', TaskStatusEnum::toArray());
+            $table->enum('priority', TaskPriorityEnum::toArray());
+            $table->dateTime('due_date')->nullable();
+            $table->dateTime('completed_at')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
         });

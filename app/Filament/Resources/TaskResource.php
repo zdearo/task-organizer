@@ -7,6 +7,8 @@ use App\Models\Task;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -15,6 +17,9 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Enums\TaskStatusEnum;
+use App\Enums\TaskPriorityEnum;
+use Illuminate\Database\Eloquent\Model;
 
 class TaskResource extends Resource
 {
@@ -31,23 +36,22 @@ class TaskResource extends Resource
                 TextInput::make('title')
                     ->required(),
 
-                TextInput::make('description')
+                TextInput::make('description'),
+
+                Select::make('status')
+                    ->options(TaskStatusEnum::class)
                     ->required(),
 
-                TextInput::make('status')
-                    ->required(),
-
-                TextInput::make('priority')
+                Select::make('priority')
+                    ->options(TaskPriorityEnum::class)
                     ->required(),
 
                 DatePicker::make('due_date'),
 
-                DatePicker::make('completed_at')
-                    ->label('Completed Date'),
-
-                TextInput::make('user_id')
-                    ->required()
-                    ->integer(),
+                Select::make('user_id')
+                    ->label(__('Related User'))
+                    ->relationship(name: 'user', titleAttribute: 'name')
+                    ->required(),
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
@@ -62,25 +66,27 @@ class TaskResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+        ->columns([
+                TextColumn::make('user.name'),
+
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('description'),
 
-                TextColumn::make('status'),
-
+                
                 TextColumn::make('priority'),
-
+                
                 TextColumn::make('due_date')
                     ->date(),
-
+                
                 TextColumn::make('completed_at')
                     ->label('Completed Date')
                     ->date(),
-
-                TextColumn::make('user_id'),
+                
+                SelectColumn::make('status')
+                    ->options(TaskStatusEnum::class)
             ])
             ->filters([
                 //

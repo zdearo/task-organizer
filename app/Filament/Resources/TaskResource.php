@@ -27,7 +27,7 @@ class TaskResource extends Resource
 
     protected static ?string $slug = 'tasks';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-list-bullet';
 
     public static function form(Form $form): Form
     {
@@ -66,6 +66,7 @@ class TaskResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->description('Manage your tasks here.')
         ->columns([
                 TextColumn::make('user.name'),
 
@@ -109,10 +110,5 @@ class TaskResource extends Resource
 //            'create' => Pages\CreateTask::route('/create'),
             'edit' => Pages\EditTask::route('/{record}/edit'),
         ];
-    }
-
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['title'];
     }
 }

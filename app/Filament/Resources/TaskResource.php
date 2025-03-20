@@ -40,10 +40,12 @@ class TaskResource extends Resource
 
                 Select::make('status')
                     ->options(TaskStatusEnum::class)
+                    ->native(false)
                     ->required(),
 
                 Select::make('priority')
                     ->options(TaskPriorityEnum::class)
+                    ->native(false)
                     ->required(),
 
                 DatePicker::make('due_date'),
@@ -51,6 +53,7 @@ class TaskResource extends Resource
                 Select::make('user_id')
                     ->label(__('Related User'))
                     ->relationship(name: 'user', titleAttribute: 'name')
+                    ->native(false)
                     ->required(),
 
                 Placeholder::make('created_at')
@@ -76,18 +79,18 @@ class TaskResource extends Resource
 
                 TextColumn::make('description'),
 
-                
+
                 TextColumn::make('priority'),
-                
+
                 TextColumn::make('due_date')
                     ->date(),
-                
+
                 TextColumn::make('completed_at')
                     ->label('Completed Date')
                     ->date(),
-                
+
                 SelectColumn::make('status')
-                    ->options(TaskStatusEnum::class)
+                    ->options(TaskStatusEnum::toArray('name'))
             ])
             ->filters([
                 //

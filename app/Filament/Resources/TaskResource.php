@@ -39,12 +39,12 @@ class TaskResource extends Resource
                 TextInput::make('description'),
 
                 Select::make('status')
-                    ->options(TaskStatusEnum::class)
+                    ->options(TaskStatusEnum::toArray('label'))
                     ->native(false)
                     ->required(),
 
                 Select::make('priority')
-                    ->options(TaskPriorityEnum::class)
+                    ->options(TaskPriorityEnum::toArray('label'))
                     ->native(false)
                     ->required(),
 
@@ -69,41 +69,41 @@ class TaskResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->description('Manage your tasks here.')
-        ->columns([
-                TextColumn::make('user.name'),
+            ->description('Manage your tasks here.')
+            ->columns([
+                    TextColumn::make('user.name'),
 
-                TextColumn::make('title')
-                    ->searchable()
-                    ->sortable(),
+                    TextColumn::make('title')
+                        ->searchable()
+                        ->sortable(),
 
-                TextColumn::make('description'),
+                    TextColumn::make('description'),
 
 
-                TextColumn::make('priority'),
+                    TextColumn::make('priority'),
 
-                TextColumn::make('due_date')
-                    ->date(),
+                    TextColumn::make('due_date')
+                        ->date(),
 
-                TextColumn::make('completed_at')
-                    ->label('Completed Date')
-                    ->date(),
+                    TextColumn::make('completed_at')
+                        ->label('Completed Date')
+                        ->date(),
 
-                SelectColumn::make('status')
-                    ->options(TaskStatusEnum::toArray('name'))
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+                    SelectColumn::make('status')
+                        ->options(TaskStatusEnum::toArray('label'))
+                ])
+                ->filters([
+                    //
+                ])
+                ->actions([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
+                ->bulkActions([
+                    BulkActionGroup::make([
+                        DeleteBulkAction::make(),
+                    ]),
+                ]);
     }
 
     public static function getPages(): array

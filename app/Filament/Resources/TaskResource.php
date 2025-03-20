@@ -20,6 +20,9 @@ use Filament\Tables\Table;
 use App\Enums\TaskStatusEnum;
 use App\Enums\TaskPriorityEnum;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Grouping\Group;
+use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Builder;
 
 class TaskResource extends Resource
 {
@@ -79,9 +82,6 @@ class TaskResource extends Resource
 
                     TextColumn::make('description'),
 
-
-                    TextColumn::make('priority'),
-
                     TextColumn::make('due_date')
                         ->date(),
 
@@ -90,11 +90,26 @@ class TaskResource extends Resource
                         ->date(),
 
                     SelectColumn::make('status')
-                        ->options(TaskStatusEnum::toArray('label'))
+                        ->options(TaskStatusEnum::toArray('label')),
+
+                    TextColumn::make('priority')
+                        ->formatStateUsing(fn (string $state): HtmlString => new HtmlString(TaskPriorityEnum::tryFrom($state)->getLabel()))
+                        ->badge()
+                        ->color(fn (string $state): string => match ($state) {
+                            '1' => 'gray',
+                            '2' => 'info',
+                            '3' => 'warning',
+                            '4' => 'danger',
+                        })
                 ])
-                ->filters([
-                    //
+                ->defaultGroup('priority')
+                ->groups([
+                    Group::make('priority')
+                        ->titlePrefixedWithLabel(false)
+                        ->getTitleFromRecordUsing(fn (Task $record): string => TaskPriorityEnum::tryFrom($record->priority)->getLabel())
+                        ->orderQueryUsing(fn (Builder $query) => $query->orderBy('priority', 'desc')),
                 ])
+                ->groupingSettingsHidden()
                 ->actions([
                     EditAction::make(),
                     DeleteAction::make(),
@@ -111,7 +126,7 @@ class TaskResource extends Resource
         return [
             'index' => Pages\ListTasks::route('/'),
 //            'create' => Pages\CreateTask::route('/create'),
-            'edit' => Pages\EditTask::route('/{record}/edit'),
+//            'edit' => Pages\EditTask::route('/{record}/edit'),
         ];
     }
 }

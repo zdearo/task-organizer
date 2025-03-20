@@ -2,12 +2,14 @@
 
 namespace App\Enums;
 
-enum TaskPriorityEnum: string
+use Filament\Support\Colors\Color;
+
+enum TaskPriorityEnum: int
 {
-    case Low = 'low';
-    case Medium = 'medium';
-    case High = 'high';
-    case Urgent = 'urgent';
+    case Urgent = 4;
+    case High = 3;
+    case Medium = 2;
+    case Low = 1;
 
     public function getLabel(): string
     {

@@ -203,5 +203,14 @@
     "Low": "Baixa",
     "Medium": "Média",
     "High": "Alta",
-    "Urgent": "Urgente"
+    "Urgent": "Urgente",
+    "Task": "Tarefa",
+    "Tasks": "Tarefas",
+    "Related User": "Usuário relacionado",
+    "Title": "Título",
+    "Description": "Descrição",
+    "Due Date": "Data de Vencimento",
+    "Completed Date": "Data de Conclusão",
+    "Status": "Status",
+    "Priority": "Prioridade"
 }

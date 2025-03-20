@@ -37,21 +37,26 @@ class TaskResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label(__('Title'))
                     ->required(),
 
-                TextInput::make('description'),
+                TextInput::make('description')
+                    ->label(__('Description')),
 
                 Select::make('status')
+                    ->label(__('Status'))
                     ->options(TaskStatusEnum::toArray('label'))
                     ->native(false)
                     ->required(),
 
                 Select::make('priority')
+                    ->label(__('Priority'))
                     ->options(TaskPriorityEnum::toArray('label'))
                     ->native(false)
                     ->required(),
 
-                DatePicker::make('due_date'),
+                DatePicker::make('due_date')
+                    ->label(__('Due Date')),
 
                 Select::make('user_id')
                     ->label(__('Related User'))
@@ -60,11 +65,11 @@ class TaskResource extends Resource
                     ->required(),
 
                 Placeholder::make('created_at')
-                    ->label('Created Date')
+                    ->label(__('Created Date'))
                     ->content(fn(?Task $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
+                    ->label(__('Last Modified Date'))
                     ->content(fn(?Task $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
@@ -74,25 +79,31 @@ class TaskResource extends Resource
         return $table
             ->description('Manage your tasks here.')
             ->columns([
-                    TextColumn::make('user.name'),
+                    TextColumn::make('user.name')
+                        ->label(__('Related User')),
 
                     TextColumn::make('title')
+                        ->label(__('Title'))
                         ->searchable()
                         ->sortable(),
 
-                    TextColumn::make('description'),
+                    TextColumn::make('description')
+                        ->label(__('Description')),
 
                     TextColumn::make('due_date')
+                        ->label(__('Due Date'))
                         ->date(),
 
                     TextColumn::make('completed_at')
-                        ->label('Completed Date')
+                        ->label(__('Completed Date'))
                         ->date(),
 
                     SelectColumn::make('status')
+                        ->label(__('Status'))
                         ->options(TaskStatusEnum::toArray('label')),
 
                     TextColumn::make('priority')
+                        ->label(__('Priority'))
                         ->formatStateUsing(fn (string $state): HtmlString => new HtmlString(TaskPriorityEnum::tryFrom($state)->getLabel()))
                         ->badge()
                         ->color(fn (string $state): string => match ($state) {
@@ -128,5 +139,23 @@ class TaskResource extends Resource
 //            'create' => Pages\CreateTask::route('/create'),
 //            'edit' => Pages\EditTask::route('/{record}/edit'),
         ];
+    }
+
+    #[\Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Tasks');
+    }
+
+    #[\Override]
+    public static function getModelLabel(): string
+    {
+        return __('Task');
+    }
+
+    #[\Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Tasks');
     }
 }

@@ -199,5 +199,9 @@
     "In Progress": "Em Progresso",
     "Completed": "Concluído",
     "Canceled": "Cancelado",
-    "On Hold": "Em Espera"
+    "On Hold": "Em Espera",
+    "Low": "Baixa",
+    "Medium": "Média",
+    "High": "Alta",
+    "Urgent": "Urgente"
 }

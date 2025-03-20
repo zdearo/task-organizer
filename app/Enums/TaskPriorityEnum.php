@@ -19,8 +19,8 @@ enum TaskPriorityEnum: string
         };
     }
 
-    public static function toArray(): array
+    public static function toArray(string $key): array
     {
-      return array_column(TaskPriorityEnum::cases(), 'value');
+      return array_column(TaskPriorityEnum::cases(), $key);
     } 
 }

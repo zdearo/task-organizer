@@ -13,8 +13,8 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->enum('status', TaskStatusEnum::toArray());
-            $table->enum('priority', TaskPriorityEnum::toArray());
+            $table->enum('status', TaskStatusEnum::toArray('value'));
+            $table->enum('priority', TaskPriorityEnum::toArray('value'));
             $table->dateTime('due_date')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->foreignId('user_id');

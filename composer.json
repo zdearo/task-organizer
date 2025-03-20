@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "zdearo/task-organizer",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "A task management application built with Laravel and Filament.\n\n",
+    "keywords": ["task", "organizer", "manager"],
     "license": "MIT",
     "require": {
         "php": "^8.3",

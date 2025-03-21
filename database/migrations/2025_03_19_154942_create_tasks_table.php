@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->enum('priority', TaskPriorityEnum::toArray('value'));
             $table->dateTime('due_date')->nullable();
             $table->dateTime('completed_at')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignIdFor(\App\Models\Team::class, 'team_id');
+            $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();
         });
     }

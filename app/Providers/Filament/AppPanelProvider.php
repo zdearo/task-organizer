@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Models\Team;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -27,6 +29,8 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
+            ->tenant(Team::class)
+            ->tenantRegistration(RegisterTeam::class)
             ->colors([
                 'primary' => Color::Green,
             ])

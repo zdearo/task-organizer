@@ -3,13 +3,14 @@
 namespace App\Observers;
 
 use App\Models\Team;
+use Str;
 
 class TeamObserver
 {
     public function creating(Team $team): void
     {
         $team->code = rand(100000, 999999);
-        $team->slug = slugify($team->name);
+        $team->slug = Str::slug($team->name, '-');
     }
 
     /**

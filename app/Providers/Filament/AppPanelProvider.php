@@ -30,6 +30,9 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
+            ->registration()
+            ->passwordReset()
+            ->profile()
             ->tenant(Team::class)
             ->tenantMiddleware([
                 ApplyTenantScopes::class,

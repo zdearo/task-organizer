@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -17,6 +18,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Models\Team;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -27,6 +30,11 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
+            ->tenant(Team::class)
+            ->tenantMiddleware([
+                ApplyTenantScopes::class,
+            ], isPersistent: true)
+            ->tenantRegistration(RegisterTeam::class)
             ->colors([
                 'primary' => Color::Green,
             ])

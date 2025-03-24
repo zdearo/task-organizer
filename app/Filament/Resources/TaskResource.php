@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TaskResource\Pages;
 use App\Models\Task;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
@@ -60,7 +61,10 @@ class TaskResource extends Resource
 
                 Select::make('user_id')
                     ->label(__('Related User'))
-                    ->relationship(name: 'user', titleAttribute: 'name')
+                    ->relationship(
+                        name: 'user',
+                        titleAttribute: 'name'
+                    )
                     ->native(false)
                     ->required(),
 

@@ -20,6 +20,9 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Pages\Tenancy\RegisterTeam;
 use App\Models\Team;
+use App\Filament\Pages\Tenancy\EditTeamProfile;
+use Filament\Navigation\MenuItem;
+use App\Filament\Pages\Tenancy\ApproveTeamMembers;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -34,6 +37,11 @@ class AppPanelProvider extends PanelProvider
             ->passwordReset()
             ->profile()
             ->tenant(Team::class)
+            ->tenantProfile(EditTeamProfile::class)
+            ->tenantMenuItems([
+                'profile' => MenuItem::make()->label('Edit team profile'),
+                'register' => MenuItem::make()->label(__('Register a new Team')),
+            ])
             ->tenantMiddleware([
                 ApplyTenantScopes::class,
             ], isPersistent: true)

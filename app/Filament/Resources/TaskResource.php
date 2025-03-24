@@ -64,8 +64,11 @@ class TaskResource extends Resource
                     ->relationship(
                         name: 'user',
                         titleAttribute: 'name',
-                        modifyQueryUsing: fn (Builder $query) => $query->whereBelongsTo(Filament::getTenant()),
-                    )
+                        modifyQueryUsing: function (Builder $query) {
+                            $query->whereHas('teams', function ($query) {
+                                $query->whereKey(Filament::getTenant()->getKey());
+                            });                         
+                        })
                     ->native(false)
                     ->required(),
 

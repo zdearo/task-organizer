@@ -6,6 +6,7 @@ use App\Observers\TeamObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[ObservedBy(TeamObserver::class)]
@@ -28,8 +29,8 @@ class Team extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function task(): BelongsTo
+    public function tasks(): HasMany
     {
-        return $this->belongsTo(Task::class);
+        return $this->hasMany(Task::class);
     }
 }

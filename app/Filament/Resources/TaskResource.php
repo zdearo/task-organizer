@@ -63,12 +63,8 @@ class TaskResource extends Resource
                     ->label(__('Related User'))
                     ->relationship(
                         name: 'user',
-                        titleAttribute: 'name',
-                        modifyQueryUsing: function (Builder $query) {
-                            $query->whereHas('teams', function ($query) {
-                                $query->whereKey(Filament::getTenant()->getKey());
-                            });                         
-                        })
+                        titleAttribute: 'name'
+                    )
                     ->native(false)
                     ->required(),
 
